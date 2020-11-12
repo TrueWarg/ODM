@@ -68,3 +68,40 @@ class IoU2DTest(unittest.TestCase):
 
         # Assert
         self.assertAlmostEqual(result, 0, places=8)
+
+    def test_box_a_bottom_right_relative_box_b_case_1(self):
+        # Arrange
+        box_a = Box2D(4, 4, 10, 10)
+        box_b = Box2D(0, 0, 5, 5)
+
+        # Act
+        result = iou_2d(box_a, box_b)
+
+        # Assert
+        self.assertAlmostEqual(result, 1 * 1 / (6 * 6 + 5 * 5 - 1 * 1), places=8)
+
+    def test_box_a_bottom_right_relative_box_b_case_2(self):
+        # Arrange
+        box_a = Box2D(2.3, 3.7, 4, 8.9)
+        box_b = Box2D(1.1, 1.27, 3.4, 5)
+
+        # Act
+        result = iou_2d(box_a, box_b)
+
+        # Assert
+        self.assertAlmostEqual(
+            result,
+            (3.4 - 2.3) * (5 - 3.7) / ((4 - 2.3) * (8.9 - 3.7) + (3.4 - 1.1) * (5 - 1.27) - (3.4 - 2.3) * (5 - 3.7)),
+            places=8
+        )
+
+    def test_box_a_bottom_right_relative_box_b_case_3(self):
+        # Arrange
+        box_a = Box2D(1, 1, 6, 8)
+        box_b = Box2D(1, 1, 3, 3.5)
+
+        # Act
+        result = iou_2d(box_a, box_b)
+
+        # Assert
+        self.assertAlmostEqual(result, 2 * 2.5 / (5 * 7 + 2 * 2.5 - 2 * 2.5), places=8)
