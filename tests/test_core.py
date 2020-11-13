@@ -1,5 +1,5 @@
 from object_detection_metrics.core import (
-    iou_2d, Box2D, precision_micro, precision_macro
+    iou_2d, precision_micro, precision_macro
 )
 import unittest
 import numpy as np
@@ -8,8 +8,8 @@ import numpy as np
 class IoU2DTest(unittest.TestCase):
     def test_box_a_top_left_relative_box_b_case_1(self):
         # Arrange
-        box_a = Box2D(0, 0, 4, 4)
-        box_b = Box2D(2, 2, 6, 6)
+        box_a = np.array([0, 0, 4, 4])
+        box_b = np.array([2, 2, 6, 6])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -19,8 +19,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_top_left_relative_box_b_case_2(self):
         # Arrange
-        box_a = Box2D(20, 20, 80, 80)
-        box_b = Box2D(40, 40, 90, 90)
+        box_a = np.array([20, 20, 80], 80)
+        box_b = np.array([40, 40, 90], 90)
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -30,8 +30,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_top_left_relative_box_b_case_3(self):
         # Arrange
-        box_a = Box2D(3, 7, 8, 9)
-        box_b = Box2D(3, 7, 8, 10)
+        box_a = np.array([3, 7, 8, 9])
+        box_b = np.array([3, 7, 8, 10])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -41,8 +41,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_top_right_relative_box_b_case_1(self):
         # Arrange
-        box_a = Box2D(400, 30.5, 420, 50)
-        box_b = Box2D(350, 35.7, 410, 52.01)
+        box_a = np.array([400, 30.5, 420, 50])
+        box_b = np.array([350, 35.7, 410, 52.01])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -52,8 +52,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_top_right_relative_box_b_case_2(self):
         # Arrange
-        box_a = Box2D(20, 12, 36, 13.5)
-        box_b = Box2D(20, 12.5, 36, 14)
+        box_a = np.array([20, 12, 36, 13.5])
+        box_b = np.array([20, 12.5, 36, 14])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -63,8 +63,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_top_right_relative_box_b_case_3(self):
         # Arrange
-        box_a = Box2D(10, 10, 20, 20)
-        box_b = Box2D(5, 20, 20, 30)
+        box_a = np.array([10, 10, 20, 20])
+        box_b = np.array([5, 20, 20, 30])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -74,8 +74,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_right_relative_box_b_case_1(self):
         # Arrange
-        box_a = Box2D(4, 4, 10, 10)
-        box_b = Box2D(0, 0, 5, 5)
+        box_a = np.array([4, 4, 10, 10])
+        box_b = np.array([0, 0, 5, 5])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -85,8 +85,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_right_relative_box_b_case_2(self):
         # Arrange
-        box_a = Box2D(2.3, 3.7, 4, 8.9)
-        box_b = Box2D(1.1, 1.27, 3.4, 5)
+        box_a = np.array([2.3, 3.7, 4, 8.9])
+        box_b = np.array([1.1, 1.27, 3.4, 5])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -100,8 +100,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_right_relative_box_b_case_3(self):
         # Arrange
-        box_a = Box2D(1, 1, 6, 8)
-        box_b = Box2D(1, 1, 3, 3.5)
+        box_a = np.array([1, 1, 6, 8])
+        box_b = np.array([1, 1, 3, 3.5])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -111,8 +111,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_left_relative_box_b_case_1(self):
         # Arrange
-        box_a = Box2D(0, 1, 3, 3.2)
-        box_b = Box2D(2.4, 0, 4, 3)
+        box_a = np.array([0, 1, 3, 3.2])
+        box_b = np.array([2.4, 0, 4, 3])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -126,8 +126,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_left_relative_box_b_case_2(self):
         # Arrange
-        box_a = Box2D(2, 2, 4, 7)
-        box_b = Box2D(1, 2, 6, 7)
+        box_a = np.array([2, 2, 4, 7])
+        box_b = np.array([1, 2, 6, 7])
 
         # Act
         result = iou_2d(box_a, box_b)
@@ -137,8 +137,8 @@ class IoU2DTest(unittest.TestCase):
 
     def test_box_a_bottom_left_relative_box_b_case_3(self):
         # Arrange
-        box_a = Box2D(2, 2, 4, 7)
-        box_b = Box2D(4, 2, 9, 7)
+        box_a = np.array([2, 2, 4, 7])
+        box_b = np.array([4, 2, 9, 7])
 
         # Act
         result = iou_2d(box_a, box_b)
