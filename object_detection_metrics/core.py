@@ -10,7 +10,7 @@ class Box2D:
     bottom: float
 
 
-def box2d_from_xyxy(box_values: List[float]) -> Box2D:
+def box2d_from_xyxy(box_values) -> Box2D:
     return Box2D(
         left=box_values[0],
         top=box_values[1],
@@ -19,13 +19,21 @@ def box2d_from_xyxy(box_values: List[float]) -> Box2D:
     )
 
 
-def box2d_from_xywh(box_values: List[float]) -> Box2D:
+def box2d_list_from_xyxy(box_values_list) -> List[Box2D]:
+    return [box2d_from_xyxy(box) for box in box_values_list]
+
+
+def box2d_from_xywh(box_values) -> Box2D:
     return Box2D(
         left=box_values[0],
         top=box_values[1],
         right=box_values[0] + box_values[2],
         bottom=box_values[1] + box_values[3],
     )
+
+
+def box2d_list_from_xywh(box_values_list) -> List[Box2D]:
+    return [box2d_from_xywh(box) for box in box_values_list]
 
 
 def iou_2d(box_a: Box2D, box_b: Box2D) -> float:
@@ -42,3 +50,11 @@ def iou_2d(box_a: Box2D, box_b: Box2D) -> float:
     union = area_a + area_b - intersection
 
     return intersection / union
+
+
+def precision():
+    pass
+
+
+def recall():
+    pass

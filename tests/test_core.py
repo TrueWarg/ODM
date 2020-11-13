@@ -142,3 +142,13 @@ class IoU2DTest(unittest.TestCase):
 
         # Assert
         self.assertAlmostEqual(result, 0, places=8)
+
+
+class PrecisionTest(unittest.TestCase):
+    def test(self):
+        pass
+
+
+class RecallTest(unittest.TestCase):
+    def test(self):
+        pass
