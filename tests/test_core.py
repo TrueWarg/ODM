@@ -1,5 +1,8 @@
-from object_detection_metrics.core import iou_2d, Box2D
+from object_detection_metrics.core import (
+    iou_2d, Box2D, precision_micro, precision_macro
+)
 import unittest
+import numpy as np
 
 
 class IoU2DTest(unittest.TestCase):
@@ -144,7 +147,53 @@ class IoU2DTest(unittest.TestCase):
         self.assertAlmostEqual(result, 0, places=8)
 
 
-class PrecisionTest(unittest.TestCase):
+class PrecisionMicroTest(unittest.TestCase):
+    def test_binary_case_1(self):
+        # Arrange
+        ground_truth = np.array([0, 0, 0, 1, 1])
+        predicted = np.array([1, 0, 0, 1, 1])
+
+        # Act
+        result = precision_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 2 / (2 + 1), places=8)
+
+    def test_binary_case_2(self):
+        # Arrange
+        ground_truth = np.array([1, 0, 0, 1, 1, 1, 0])
+        predicted = np.array([1, 0, 0, 1, 1, 0, 0])
+
+        # Act
+        result = precision_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 3 / (3 + 0), places=8)
+
+    def test_binary_case_3(self):
+        # Arrange
+        ground_truth = np.array([1, 1, 0, 1, 1, 1, 0])
+        predicted = np.array([1, 0, 1, 1, 1, 0, 1])
+
+        # Act
+        result = precision_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 3 / (3 + 2), places=8)
+
+    def test_binary_case_4(self):
+        # Arrange
+        ground_truth = np.array([0, 0, 0, 0, 0, 0, 0])
+        predicted = np.array([0, 0, 0, 0, 0, 0, 0])
+
+        # Act
+        result = precision_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 0.0, places=8)
+
+
+class PrecisionMacroTest(unittest.TestCase):
     def test(self):
         pass
 

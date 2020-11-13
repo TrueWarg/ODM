@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 from typing import List
+from collections import Counter
+
+import numpy as np
 
 
 @dataclass()
@@ -52,8 +55,16 @@ def iou_2d(box_a: Box2D, box_b: Box2D) -> float:
     return intersection / union
 
 
-def precision():
-    pass
+def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+    tp = np.count_nonzero(np.multiply(ground_truth, predicted))
+    if tp == 0:
+        return 0
+    fp = sum(true == 0 and pred == 1 for true, pred in zip(ground_truth, predicted))
+    return tp / (tp + fp)
+
+
+def precision_macro(ground_truth, predicted) -> float:
+    return 0.0
 
 
 def recall():
