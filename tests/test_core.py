@@ -1,5 +1,5 @@
 from object_detection_metrics.core import (
-    iou_2d, precision_micro, precision_macro
+    iou_2d, precision_micro, recall_micro
 )
 import unittest
 import numpy as np
@@ -198,6 +198,58 @@ class PrecisionMacroTest(unittest.TestCase):
         pass
 
 
-class RecallTest(unittest.TestCase):
-    def test(self):
-        pass
+class RecallMicroTest(unittest.TestCase):
+    def test_binary_case_1(self):
+        # Arrange
+        ground_truth = np.array([1, 0, 0, 1, 1])
+        predicted = np.array([1, 0, 0, 1, 1])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 1, places=8)
+
+    def test_binary_case_2(self):
+        # Arrange
+        ground_truth = np.array([0, 0, 0])
+        predicted = np.array([0, 0, 0])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 0, places=8)
+
+    def test_binary_case_3(self):
+        # Arrange
+        ground_truth = np.array([1, 1, 0, 1, 1])
+        predicted = np.array([1, 0, 1, 1, 1])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 3 / (3 + 1), places=8)
+
+    def test_binary_case_4(self):
+        # Arrange
+        ground_truth = np.array([1, 1, 1, 1, 1, 0, 0, 1])
+        predicted = np.array([1, 0, 1, 1, 1, 0, 1, 0])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 4 / (4 + 2), places=8)
+
+    def test_binary_case_5(self):
+        # Arrange
+        ground_truth = np.array([1, 1, 0, 1, 1])
+        predicted = np.array([1, 0, 1, 0, 0])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, 1 / (1 + 3), places=8)

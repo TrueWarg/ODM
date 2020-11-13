@@ -25,9 +25,13 @@ def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     return tp / (tp + fp)
 
 
-def precision_macro(ground_truth, predicted) -> float:
+def precision_macro() -> float:
     return 0.0
 
 
-def recall():
-    pass
+def recall_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+    tp = np.count_nonzero(np.multiply(ground_truth, predicted))
+    if tp == 0:
+        return 0
+    fn = sum(true == 1 and pred == 0 for true, pred in zip(ground_truth, predicted))
+    return tp / (tp + fn)
