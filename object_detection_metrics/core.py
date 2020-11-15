@@ -24,10 +24,10 @@ def iou_2d(box_a: np.ndarray, box_b: np.ndarray) -> float:
     return intersection / union
 
 
-def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+def precision_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
-    Calculate precision for k classes using one-vs-all principe:
-    PRE = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FP_1 + FP_2 + ... + FP_k)
+    Calculate precision for 2 classes:
+    PRE = TP / (TP + FP)
 
     :param ground_truth: array of actual class labels
     :param predicted: array of predicted class labels
@@ -44,10 +44,10 @@ def precision_macro() -> float:
     return 0.0
 
 
-def recall_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
-    Calculate recall for k classes using one-vs-all principe:
-    PRE = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FN_1 + FN_2 + ... + FN_k)
+    Calculate recall for 2 classes:
+    PRE = TP / (TP + FN)
 
     :param ground_truth: array of actual class labels
     :param predicted: array of predicted class labels
