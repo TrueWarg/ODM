@@ -40,8 +40,28 @@ def precision_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     return tp / (tp + fp)
 
 
-def precision_macro() -> float:
-    return 0.0
+def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+    """
+    Calculate precision for k classes using one-vs-all principe:
+    PRE = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FP_1 + FP_2 + ... + FP_k)
+
+    :param ground_truth: array of actual class labels
+    :param predicted: array of predicted class labels
+    :return: score in range [0.0 - 1.0]
+    """
+
+    class_ids = np.union1d(np.unique(ground_truth), np.unique(predicted))
+    tp = 0
+    fp = 0
+
+    for class_id in class_ids:
+        tp += sum(true == class_id and pred == class_id for true, pred in zip(ground_truth, predicted))
+        fp += sum(true != class_id and pred == class_id for true, pred in zip(ground_truth, predicted))
+
+    if tp == 0:
+        return 0
+
+    return tp / (tp + fp)
 
 
 def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
