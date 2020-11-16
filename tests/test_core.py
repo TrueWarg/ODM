@@ -1,5 +1,5 @@
 from object_detection_metrics.core import (
-    iou_2d, precision_binary, precision_micro, recall_binary
+    iou_2d, precision_binary, precision_micro, recall_binary, recall_micro
 )
 import unittest
 import numpy as np
@@ -283,3 +283,38 @@ class RecallBinaryTest(unittest.TestCase):
 
         # Assert
         self.assertAlmostEqual(result, 1 / (1 + 3), places=8)
+
+
+class RecallMicroTest(unittest.TestCase):
+    def test_3_classes_case_1(self):
+        # Arrange
+        ground_truth = np.array([0, 1, 2, 0, 2, 0, 1])
+        predicted = np.array([0, 1, 2, 0, 2, 2, 0])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, (2 + 1 + 2) / (2 + 1 + 2 + 1 + 1 + 0), places=8)
+
+    def test_3_classes_case_2(self):
+        # Arrange
+        ground_truth = np.array([0, 1, 2, 0, 2, 0, 1, 2, 2])
+        predicted = np.array([2, 1, 2, 1, 2, 2, 1, 1, 1])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, (0 + 2 + 2) / (0 + 2 + 2 + 3 + 0 + 2), places=8)
+
+    def test_4_classes_case_1(self):
+        # Arrange
+        ground_truth = np.array([0, 1, 2, 3, 2, 0, 0])
+        predicted = np.array([2, 1, 2, 3, 2, 2, 0])
+
+        # Act
+        result = recall_micro(ground_truth, predicted)
+
+        # Assert
+        self.assertAlmostEqual(result, (1 + 1 + 2 + 1) / (1 + 1 + 2 + 1 + 2 + 0 + 0 + 0), places=8)
