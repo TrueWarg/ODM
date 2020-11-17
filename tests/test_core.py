@@ -193,6 +193,7 @@ class PrecisionBinaryTest(unittest.TestCase):
         self.assertAlmostEqual(result, 0.0, places=8)
 
 
+# See NOTE_MICRO_PRE_REC_EQUALITY
 class PrecisionMicroTest(unittest.TestCase):
     def test_3_classes_case_1(self):
         # Arrange
@@ -285,6 +286,7 @@ class RecallBinaryTest(unittest.TestCase):
         self.assertAlmostEqual(result, 1 / (1 + 3), places=8)
 
 
+# See NOTE_MICRO_PRE_REC_EQUALITY
 class RecallMicroTest(unittest.TestCase):
     def test_3_classes_case_1(self):
         # Arrange
@@ -318,3 +320,6 @@ class RecallMicroTest(unittest.TestCase):
 
         # Assert
         self.assertAlmostEqual(result, (1 + 1 + 2 + 1) / (1 + 1 + 2 + 1 + 2 + 0 + 0 + 0), places=8)
+
+# NOTE_MICRO_PRE_REC_EQUALITY
+# TODO Precision-micro and recall-micro are equal, so it opens up the possibility of using property tests
