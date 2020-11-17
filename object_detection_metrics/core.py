@@ -67,7 +67,7 @@ def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate recall for 2 classes:
-    PRE = TP / (TP + FN)
+    REC = TP / (TP + FN)
 
     :param ground_truth: array of actual class labels
     :param predicted: array of predicted class labels
@@ -77,4 +77,28 @@ def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     if tp == 0:
         return 0
     fn = sum(true == 1 and pred == 0 for true, pred in zip(ground_truth, predicted))
+    return tp / (tp + fn)
+
+
+def recall_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+    """
+    Calculate recall for k classes using one-vs-all principe:
+    REC = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FN_1 + FN_2 + ... + FN_k)
+
+    :param ground_truth: array of actual class labels
+    :param predicted: array of predicted class labels
+    :return: score in range [0.0 - 1.0]
+    """
+
+    class_ids = np.union1d(np.unique(ground_truth), np.unique(predicted))
+    tp = 0
+    fn = 0
+
+    for class_id in class_ids:
+        tp += sum(true == class_id and pred == class_id for true, pred in zip(ground_truth, predicted))
+        fn += sum(true == class_id and pred != class_id for true, pred in zip(ground_truth, predicted))
+
+    if tp == 0:
+        return 0
+
     return tp / (tp + fn)
