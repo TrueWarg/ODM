@@ -49,7 +49,6 @@ def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     :param predicted: array of predicted class labels
     :return: score in range [0.0 - 1.0]
     """
-
     class_ids = np.union1d(np.unique(ground_truth), np.unique(predicted))
     tp = 0
     fp = 0
@@ -62,6 +61,28 @@ def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
         return 0
 
     return tp / (tp + fp)
+
+
+def precision_macro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
+    """
+    Calculate precision for k classes using average:
+    PRE = PRE_1 + PRE_2 + ... + PRE_k / k
+
+    :param ground_truth: array of actual class labels
+    :param predicted: array of predicted class labels
+    :return: score in range [0.0 - 1.0]
+    """
+    class_ids = np.union1d(np.unique(ground_truth), np.unique(predicted))
+
+    sum_pre = 0.0
+
+    for class_id in class_ids:
+        tp = sum(true == class_id and pred == class_id for true, pred in zip(ground_truth, predicted))
+        fp = sum(true != class_id and pred == class_id for true, pred in zip(ground_truth, predicted))
+        if tp != 0:
+            sum_pre += tp / (tp + fp)
+
+    return sum_pre / len(class_ids)
 
 
 def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
