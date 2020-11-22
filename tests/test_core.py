@@ -1,6 +1,7 @@
 from object_detection_metrics.core import (
-    iou_2d, precision_binary, precision_micro, recall_binary, recall_micro,
-    precision_macro
+    iou_2d,
+    precision_binary, precision_micro, precision_macro,
+    recall_binary, recall_micro, recall_macro
 )
 import unittest
 import numpy as np
@@ -381,6 +382,66 @@ class RecallMicroTest(unittest.TestCase):
 
         # Assert
         self.assertAlmostEqual(result, (1 + 1 + 2 + 1) / (1 + 1 + 2 + 1 + 2 + 0 + 0 + 0), places=8)
+
+
+class RecallMacroTest(unittest.TestCase):
+    def test_3_classes_case_1(self):
+        # Arrange
+        ground_truth = np.array([0, 1, 2, 0, 2, 0, 1, 0, 1])
+        predicted = np.array([2, 1, 2, 1, 2, 2, 1, 1, 1])
+
+        # Act
+        result = recall_macro(ground_truth, predicted)
+
+        # Assert
+        rec_0 = 0
+        rec_1 = 1
+        rec_2 = 1
+        self.assertAlmostEqual(result, (rec_0 + rec_1 + rec_2) / 3, places=8)
+
+    def test_3_classes_case_2(self):
+        # Arrange
+        ground_truth = np.array([0, 1, 2, 0])
+        predicted = np.array([0, 1, 2, 1])
+
+        # Act
+        result = recall_macro(ground_truth, predicted)
+
+        # Assert
+        rec_0 = 1 / (1 + 1)
+        rec_1 = 1
+        rec_2 = 1
+        self.assertAlmostEqual(result, (rec_0 + rec_1 + rec_2) / 3, places=8)
+
+    def test_4_classes_case_1(self):
+        # Arrange
+        ground_truth = np.array([1, 1, 2, 0, 3, 1, 3, 0])
+        predicted = np.array([0, 1, 2, 0, 2, 1, 3, 3])
+
+        # Act
+        result = recall_macro(ground_truth, predicted)
+
+        # Assert
+        rec_0 = 1 / (1 + 1)
+        rec_1 = 2 / (2 + 1)
+        rec_2 = 1
+        rec_3 = 1 / (1 + 1)
+        self.assertAlmostEqual(result, (rec_0 + rec_1 + rec_2 + rec_3) / 4, places=8)
+
+    def test_4_classes_case_2(self):
+        # Arrange
+        ground_truth = np.array([3, 1, 2, 3, 2, 1, 3, 0])
+        predicted = np.array([0, 1, 2, 0, 2, 1, 1, 1])
+
+        # Act
+        result = recall_macro(ground_truth, predicted)
+
+        # Assert
+        rec_0 = 0
+        rec_1 = 1
+        rec_2 = 1
+        rec_3 = 0
+        self.assertAlmostEqual(result, (rec_0 + rec_1 + rec_2 + rec_3) / 4, places=8)
 
 # NOTE_MICRO_PRE_REC_EQUALITY
 # TODO Precision-micro and recall-micro are equal, so it opens up the possibility of using property tests
