@@ -1,4 +1,10 @@
 import numpy as np
+from enum import Enum
+
+
+class Average(Enum):
+    MICRO = 'micro'
+    MACRO = 'macro'
 
 
 def iou_2d(box_a: np.ndarray, box_b: np.ndarray) -> float:
