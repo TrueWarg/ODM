@@ -9,7 +9,9 @@ class Average(Enum):
 
 def iou_2d(box_a: np.ndarray, box_b: np.ndarray) -> float:
     """
-    Calculate intersection over union in 2D space
+    Calculate intersection over union in 2D space:
+
+    IoU = INTERSECTION / UNION
 
     :param box_a:  bounding box with format xyxy
     :param box_b:  bounding box with format xyxy
@@ -33,6 +35,7 @@ def iou_2d(box_a: np.ndarray, box_b: np.ndarray) -> float:
 def precision_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate precision for 2 classes:
+
     PRE = TP / (TP + FP)
 
     :param ground_truth: array of actual class labels
@@ -49,6 +52,7 @@ def precision_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate precision for k classes using one-vs-all principe:
+
     PRE = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FP_1 + FP_2 + ... + FP_k)
 
     :param ground_truth: array of actual class labels
@@ -72,6 +76,7 @@ def precision_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def precision_macro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate precision for k classes using average:
+
     PRE = PRE_1 + PRE_2 + ... + PRE_k / k
 
     :param ground_truth: array of actual class labels
@@ -94,6 +99,7 @@ def precision_macro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate recall for 2 classes:
+
     REC = TP / (TP + FN)
 
     :param ground_truth: array of actual class labels
@@ -110,6 +116,7 @@ def recall_binary(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def recall_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate recall for k classes using one-vs-all principe:
+
     REC = TP_1 + TP_2 + ... + TP_k / (TP_1 + TP_2 + ... + TP_k + FN_1 + FN_2 + ... + FN_k)
 
     :param ground_truth: array of actual class labels
@@ -133,6 +140,7 @@ def recall_micro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
 def recall_macro(ground_truth: np.ndarray, predicted: np.ndarray) -> float:
     """
     Calculate precision for k classes using average:
+
     REC = REC_1 + PRE_2 + ... + PRE_k / k)
 
     :param ground_truth: array of actual class labels
